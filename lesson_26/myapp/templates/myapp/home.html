@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Strona główna</title>
+</head>
+<body>
+    <h1>Mój Blog</h1>
+    
+    <form method="get" action="{% url 'search_posts' %}">
+        <input type="text" name="q" placeholder="Szukaj...">
+        <button type="submit">Szukaj</button>
+    </form>
+    
+    <h2>Ostatnie posty:</h2>
+    <ul>
+    {% for post in posts %}
+        <li><strong>{{ post.title }}</strong> - {{ post.content|truncatewords:20 }}</li>
+    {% empty %}
+        <p>Brak postów.</p>
+    {% endfor %}
+    </ul>
+</body>
+</html>
