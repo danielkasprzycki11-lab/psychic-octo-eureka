@@ -1,0 +1,18 @@
+<h1>Wyniki wyszukiwania: "{{ query }}"</h1>
+
+<p>Znaleziono: <strong>{{ results_count }}</strong> artykułów</p>
+
+{% if posts %}
+    <ul>
+    {% for post in posts %}
+        <li>
+            <strong>{{ post.title }}</strong><br>
+            {{ post.content|truncatewords:30 }}
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Nie znaleziono żadnych artykułów.</p>
+{% endif %}
+
+<a href="/">Wróć do strony głównej</a>

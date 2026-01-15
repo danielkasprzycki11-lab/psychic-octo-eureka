@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Produkty{% endblock %}
+
+{% block content %}
+    <h2>Lista produktów</h2>
+    <a href="/add-product/">+ Dodaj produkt</a>
+    
+    <table>
+        <tr>
+            <th>Nazwa</th>
+            <th>Opis</th>
+            <th>Cena</th>
+            <th>Kategoria</th>
+        </tr>
+        {% for product in products %}
+            <tr>
+                <td>{{ product.name }}</td>
+                <td>{{ product.description }}</td>
+                <td>{{ product.price }} zł</td>
+                <td>{{ product.category.name }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
