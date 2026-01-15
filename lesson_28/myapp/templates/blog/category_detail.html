@@ -1,0 +1,11 @@
+<h1>{{ category.name }}</h1>
+
+<h2>Artykuły w tej kategorii:</h2>
+
+<ul>
+{% for post in posts %}
+    <li><strong>{{ post.title }}</strong><br>{{ post.content }}</li>
+{% empty %}
+    <p>Brak artykułów w tej kategorii.</p>
+{% endfor %}
+</ul>
