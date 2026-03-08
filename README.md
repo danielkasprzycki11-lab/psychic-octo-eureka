@@ -49,15 +49,19 @@ Aplikacja webowa do przeglądania katalogu książek, zarządzania egzemplarzami
 ```
 
 5. Wejdź w przeglądarce na:
-
+```bash
     http://127.0.0.1:8000/ – katalog książek,
     http://127.0.0.1:8000/admin/ – panel admina,
     http://127.0.0.1:8000/api/schema/swagger-ui/ – dokumentacja API.
+```
 
-6. Konto testowe
-
+6. Konto testowe:
+```bash
     Login: student
     Hasło: StudentPass123! (przykładowe dane – można zmienić w panelu admina)
+```
 
-6. Autor
+7. Autor:
+```bash
     Projekt przygotowany przez Daniela Kasprzyckiego jako praca zaliczeniowa Kursu Python Developer organizowanego przez Learn IT.
+```
