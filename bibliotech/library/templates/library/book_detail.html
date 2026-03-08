@@ -1,0 +1,65 @@
+{% extends "library/base.html" %}
+
+{% block title %}{{ book.title }} – BiblioTech{% endblock %}
+
+{% block content %}
+<h1 class="mb-3">{{ book.title }}</h1>
+
+<p class="mb-1">
+  <strong>Autor:</strong> {{ book.author.name }}<br>
+  <strong>Gatunek:</strong> {{ book.genre.name }}<br>
+  <strong>Data wydania:</strong> {{ book.publication_date }}
+</p>
+
+<p class="mt-3">{{ book.description }}</p>
+
+<h2 class="h5 mt-4 mb-3">Egzemplarze</h2>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID egzemplarza</th>
+      <th>Status</th>
+      <th>Akcja</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for copy in copies %}
+      <tr>
+        <td>{{ copy.id }}</td>
+        <td>
+          {% if copy.status == 'available' %}
+            <span class="badge text-bg-success">Dostępny</span>
+          {% elif copy.status == 'reserved' %}
+            <span class="badge text-bg-warning">Zarezerwowany</span>
+          {% else %}
+            <span class="badge text-bg-secondary">{{ copy.status }}</span>
+          {% endif %}
+        </td>
+        <td>
+          {% if user.is_authenticated and copy.status == 'available' %}
+            <form method="post" action="{% url 'library:reserve_copy' copy.id %}">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-sm btn-primary">
+                Rezerwuj na 2 tygodnie
+              </button>
+            </form>
+          {% elif not user.is_authenticated %}
+            <small class="text-muted">Zaloguj się, aby rezerwować.</small>
+          {% else %}
+            <small class="text-muted">Brak dostępnej akcji.</small>
+          {% endif %}
+        </td>
+      </tr>
+    {% empty %}
+      <tr>
+        <td colspan="3">Brak egzemplarzy tej książki.</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<a href="{% url 'library:book_list' %}" class="btn btn-outline-secondary mt-3">
+  Powrót do katalogu
+</a>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "library/base.html" %}
+
+{% block title %}Moje rezerwacje – BiblioTech{% endblock %}
+
+{% block content %}
+<h1 class="mb-3">Moje rezerwacje</h1>
+
+{% if reservations %}
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Tytuł książki</th>
+        <th>ID egzemplarza</th>
+        <th>Data rezerwacji</th>
+        <th>Ważna do</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in reservations %}
+        <tr>
+          <td>{{ r.copy.book.title }}</td>
+          <td>{{ r.copy.id }}</td>
+          <td>{{ r.reserved_at }}</td>
+          <td>{{ r.valid_until }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <div class="alert alert-info">
+    Nie masz żadnych rezerwacji.
+  </div>
+{% endif %}
+
+<a href="{% url 'library:book_list' %}" class="btn btn-outline-secondary mt-3">
+  Powrót do katalogu
+</a>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends "library/base.html" %}
+
+{% block title %}Katalog – BiblioTech{% endblock %}
+
+{% block content %}
+<h1 class="mb-3">Katalog książek</h1>
+
+<form method="get" class="row gy-2 gx-3 align-items-end mb-4">
+  <div class="col-md-4">
+    <label class="form-label">Szukaj (tytuł)</label>
+    <input type="text" name="q" value="{{ current_query }}" class="form-control">
+  </div>
+  <div class="col-md-3">
+    <label class="form-label">Gatunek</label>
+    <select name="genre" class="form-select">
+      <option value="">Wszystkie</option>
+      {% for genre in genres %}
+        <option value="{{ genre.id }}" {% if request.GET.genre|default:'' == genre.id|stringformat:"s" %}selected{% endif %}>
+          {{ genre.name }}
+        </option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-md-3">
+    <label class="form-label">Autor</label>
+    <select name="author" class="form-select">
+      <option value="">Wszyscy</option>
+      {% for author in authors %}
+        <option value="{{ author.id }}" {% if request.GET.author|default:'' == author.id|stringformat:"s" %}selected{% endif %}>
+          {{ author.name }}
+        </option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-md-2">
+    <button type="submit" class="btn btn-primary w-100">Filtruj</button>
+  </div>
+</form>
+
+<h2 class="h5 mb-3">Liczba książek: {{ books|length }}</h2>
+
+<ul class="list-group">
+  {% for book in books %}
+    <li class="list-group-item">
+      <a href="{% url 'library:book_detail' book.pk %}" class="fw-bold">{{ book.title }}</a><br>
+      <small>Autor: {{ book.author.name }} | Gatunek: {{ book.genre.name }}</small><br>
+      <small class="text-muted">{{ book.description|truncatewords:20 }}</small>
+    </li>
+  {% empty %}
+    <li class="list-group-item">Brak książek pasujących do filtrów.</li>
+  {% endfor %}
+</ul>
+{% endblock %}
